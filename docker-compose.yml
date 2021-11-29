@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mountebank:
+    build: .
+    container_name: mountebank
+    ports:
+      - "2525:2525"
+      - "5555:5555"
+    volumes:
+      - ./imposters:/imposters
+    command: mb --configfile /imposters/imposters.ejs --allowInjection --debug
+    networks:
+      - default
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2525"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24

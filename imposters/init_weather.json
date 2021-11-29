@@ -1,0 +1,136 @@
+{
+  "port": 5555,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_Hanoi_VN_HTTP_OK.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather",
+            "query": {
+              "q": "Hanoi,vn",
+              "appid": "eb213bbeef11b1cc755fc20be9ed16d6"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_Washington_US_HTTP_OK.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather",
+            "query": {
+              "q": "Washington,us",
+              "appid": "eb213bbeef11b1cc755fc20be9ed16d6"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_Blank_location_HTTP_BAD_REQUEST.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather"
+          }
+        },
+        {
+          "equals": {
+            "query": {
+              "q": "",
+              "appid": "eb213bbeef11b1cc755fc20be9ed16d6"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_HTTP_UNAUTHORIZED.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather"
+          }
+        },
+        {
+          "not": {
+            "equals": {
+              "query": {
+                "appid": "eb213bbeef11b1cc755fc20be9ed16d6"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_HTTP_UNAUTHORIZED.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather"
+          }
+        },
+        {
+          "equals": {
+            "query": {
+              "appid": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "inject": "<%- stringify(filename, 'weather_City_invalid_HTTP_NOT_FOUND.js')%>"
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api.openweathermap.org/data/2.5/weather"
+          }
+        },
+        {
+          "equals": {
+            "query": {
+              "q": "Hanoi,us",
+              "appid": "eb213bbeef11b1cc755fc20be9ed16d6"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
